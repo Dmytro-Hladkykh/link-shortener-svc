@@ -1,9 +1,9 @@
-log_level: "debug"
+log:
+  level: debug
+  disable_sentry: true
+
 listener:
-  type: "tcp"
-  address: ":8080"
-database:
-  type: "postgres"
-  dsn: "postgres://postgres:password@postgres:5432/link_shortener?sslmode=disable"
-copus:
-  version: "v1"
+  addr: :8000
+
+db:
+  url: postgres://user:password@db/linkshortener?sslmode=disable
