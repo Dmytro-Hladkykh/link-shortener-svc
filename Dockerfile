@@ -1,17 +1,19 @@
 FROM golang:1.20-alpine as buildbase
 
-RUN apk add git build-base
-
 WORKDIR /go/src/github.com/Dmytro-Hladkykh/link-shortener-svc
-COPY vendor .
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
 COPY . .
 
-RUN GOOS=linux go build  -o /usr/local/bin/link-shortener-svc /go/src/github.com/Dmytro-Hladkykh/link-shortener-svc
-
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /usr/local/bin/link-shortener-svc .
 
 FROM alpine:3.9
 
-COPY --from=buildbase /usr/local/bin/link-shortener-svc /usr/local/bin/link-shortener-svc
 RUN apk add --no-cache ca-certificates
 
-ENTRYPOINT ["link-shortener-svc"]
+COPY --from=buildbase /usr/local/bin/link-shortener-svc /usr/local/bin/link-shortener-svc
+
+ENTRYPOINT ["/usr/local/bin/link-shortener-svc"]

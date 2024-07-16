@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: link_shortener
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  link-shortener-svc:
+    build: .
+    container_name: link-shortener-svc
+    environment:
+      KV_VIPER_FILE: /config/config.yaml
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - ./config.yaml:/config/config.yaml
+
+volumes:
+  postgres_data:
