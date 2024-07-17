@@ -13,8 +13,6 @@ type Config interface {
     pgdb.Databaser
     types.Copuser
     comfig.Listenerer
-
-    DB() *pgdb.DB
 }
 
 type config struct {
@@ -23,21 +21,14 @@ type config struct {
     types.Copuser
     comfig.Listenerer
     getter kv.Getter
-    db     *pgdb.DB
 }
 
-func New(getter kv.Getter) Config {
-    db := pgdb.NewDatabaser(getter).DB() 
+func New(getter kv.Getter) Config { 
     return &config{
         getter:     getter,
-        db:         db,
         Databaser:  pgdb.NewDatabaser(getter),
         Copuser:    copus.NewCopuser(getter),
         Listenerer: comfig.NewListenerer(getter),
         Logger:     comfig.NewLogger(getter, comfig.LoggerOpts{}),
     }
-}
-
-func (c *config) DB() *pgdb.DB {
-    return c.db
 }

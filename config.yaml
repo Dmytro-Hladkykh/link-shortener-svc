@@ -6,4 +6,4 @@ listener:
   addr: :8000
 
 db:
-  url: postgres://user:password@db/linkshortener?sslmode=disable
+  url: postgres://postgres:password@db/linkshortener?sslmode=disable

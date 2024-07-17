@@ -3,7 +3,6 @@ FROM golang:1.22.5-alpine as buildbase
 WORKDIR /go/src/github.com/Dmytro-Hladkykh/link-shortener-svc
 
 COPY go.mod go.sum ./
-
 RUN go mod download
 
 COPY . .
