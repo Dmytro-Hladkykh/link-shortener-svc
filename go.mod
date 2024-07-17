@@ -1,6 +1,6 @@
 module github.com/Dmytro-Hladkykh/link-shortener-svc
 
-go 1.20
+go 1.22.5
 
 require (
 	github.com/alecthomas/kingpin v2.2.6+incompatible

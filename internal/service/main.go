@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/Dmytro-Hladkykh/link-shortener-svc/internal/config"
-	"github.com/jmoiron/sqlx"
 	"gitlab.com/distributed_lab/kit/copus/types"
+	"gitlab.com/distributed_lab/kit/pgdb"
 	"gitlab.com/distributed_lab/logan/v3"
 	"gitlab.com/distributed_lab/logan/v3/errors"
 )
@@ -15,7 +15,7 @@ type service struct {
     log      *logan.Entry
     copus    types.Copus
     listener net.Listener
-    db       *sqlx.DB 
+    db       *pgdb.DB
 }
 
 func (s *service) run() error {

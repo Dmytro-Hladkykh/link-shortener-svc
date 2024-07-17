@@ -1,7 +1,6 @@
 package config
 
 import (
-	"github.com/jmoiron/sqlx"
 	"gitlab.com/distributed_lab/kit/comfig"
 	"gitlab.com/distributed_lab/kit/copus"
 	"gitlab.com/distributed_lab/kit/copus/types"
@@ -10,35 +9,35 @@ import (
 )
 
 type Config interface {
-	comfig.Logger
-	pgdb.Databaser
-	types.Copuser
-	comfig.Listenerer
+    comfig.Logger
+    pgdb.Databaser
+    types.Copuser
+    comfig.Listenerer
 
-	DB() *sqlx.DB
+    DB() *pgdb.DB
 }
 
 type config struct {
-	comfig.Logger
-	pgdb.Databaser
-	types.Copuser
-	comfig.Listenerer
-	getter kv.Getter
-	db     *sqlx.DB
+    comfig.Logger
+    pgdb.Databaser
+    types.Copuser
+    comfig.Listenerer
+    getter kv.Getter
+    db     *pgdb.DB
 }
 
 func New(getter kv.Getter) Config {
-	db := pgdb.NewDatabaser(getter).DB()
-	return &config{
-		getter:     getter,
-		db:         db,
-		Databaser:  pgdb.NewDatabaser(getter),
-		Copuser:    copus.NewCopuser(getter),
-		Listenerer: comfig.NewListenerer(getter),
-		Logger:     comfig.NewLogger(getter, comfig.LoggerOpts{}),
-	}
+    db := pgdb.NewDatabaser(getter).DB() 
+    return &config{
+        getter:     getter,
+        db:         db,
+        Databaser:  pgdb.NewDatabaser(getter),
+        Copuser:    copus.NewCopuser(getter),
+        Listenerer: comfig.NewListenerer(getter),
+        Logger:     comfig.NewLogger(getter, comfig.LoggerOpts{}),
+    }
 }
 
-func (c *config) DB() *sqlx.DB {
-	return c.db
+func (c *config) DB() *pgdb.DB {
+    return c.db
 }

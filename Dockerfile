@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine as buildbase
+FROM golang:1.22.5-alpine as buildbase
 
 WORKDIR /go/src/github.com/Dmytro-Hladkykh/link-shortener-svc
 
