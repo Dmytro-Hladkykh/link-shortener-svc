@@ -9,7 +9,7 @@ import (
 	"gitlab.com/distributed_lab/logan/v3/errors"
 )
 
-const shortLinkTableName = "shortened_urls"
+const shortLinkTableName = "links"
 
 func NewShortLinkQ(db *pgdb.DB) data.ShortLinkQ {
     return &shortLinkQ{

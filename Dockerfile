@@ -15,4 +15,4 @@ RUN apk add --no-cache ca-certificates
 
 COPY --from=buildbase /usr/local/bin/link-shortener-svc /usr/local/bin/link-shortener-svc
 
-ENTRYPOINT ["/usr/local/bin/link-shortener-svc"]
+ENTRYPOINT ["link-shortener-svc", "run", "service"]
