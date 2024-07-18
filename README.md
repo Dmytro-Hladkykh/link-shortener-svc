@@ -6,62 +6,105 @@ This service provides URL shortening functionality. It allows users to create sh
 
 ## Install
 
-  ```
-  git clone github.com/Dmytro-Hladkykh/link-shortener-svc
-  cd link-shortener-svc
-  go build main.go
-  export KV_VIPER_FILE=./config.yaml
-  ./main migrate up
-  ./main run service
-  ```
-
-## Documentation
-
-We do use openapi:json standard for API. We use swagger for documenting our API.
-
-To open online documentation, go to [swagger editor](http://localhost:8080/swagger-editor/) here is how you can start it
 ```
-  cd docs
-  npm install
-  npm start
+git clone github.com/Dmytro-Hladkykh/link-shortener-svc
+cd link-shortener-svc
+go build main.go
+export KV_VIPER_FILE=./config.yaml
+./main migrate up
+./main run service
 ```
-To build documentation use `npm run build` command,
-that will create open-api documentation in `web_deploy` folder.
 
-To generate resources for Go models run `./generate.sh` script in root folder.
-use `./generate.sh --help` to see all available options.
+## Running from Docker
 
-Note: if you are using Gitlab for building project `docs/spec/paths` folder must not be
-empty, otherwise only `Build and Publish` job will be passed.  
-
-## Running from docker 
-  
 Make sure that docker installed.
 
-use `docker run ` with `-p 8080:80` to expose port 80 to 8080
+Configure `docker-compose.yml` with entrypoint commands:
 
-  ```
-  docker build -t github.com/Dmytro-Hladkykh/link-shortener-svc .
-  docker run -e KV_VIPER_FILE=/config.yaml github.com/Dmytro-Hladkykh/link-shortener-svc
-  ```
+```
+entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "/usr/local/bin/link-shortener-svc migrate up && /usr/local/bin/link-shortener-svc run service",
+      ]
+```
+
+Possible commands are:
+
+```
+/usr/local/bin/link-shortener-svc migrate up
+```
+
+```
+/usr/local/bin/link-shortener-svc run service
+```
+
+```
+/usr/local/bin/link-shortener-svc migrate down
+```
+
+To run the service with Docker use:
+
+```
+docker-compose up --build
+```
+
+## Testing
+
+To test usage you can use Postman.
+
+### Create a POST with:
+
+```
+http://localhost:8000/link-shortener
+```
+
+With Body:
+
+```
+{
+  "original_url": "http://example.com"
+}
+```
+
+In response you will get:
+
+```
+{
+  "short_code": "YrEiin"
+}
+```
+
+### Create a GET with:
+
+```
+http://localhost:8000/link-shortener/YrEiin
+```
+
+In response you will get:
+
+```
+{
+  "original_url": "http://example.com"
+}
+```
 
 ## Running from Source
 
-* Set up environment value with config file path `KV_VIPER_FILE=./config.yaml`
-* Provide valid config file
-* Launch the service with `migrate up` command to create database schema
-* Launch the service with `run service` command
-
+- Set up environment value with config file path `KV_VIPER_FILE=./config.yaml`
+- Provide valid config file
+- Launch the service with `migrate up` command to create database schema
+- Launch the service with `run service` command
 
 ### Database
-For services, we do use ***PostgresSQL*** database. 
+
+For services, we do use **_PostgresSQL_** database.
 You can [install it locally](https://www.postgresql.org/download/) or use [docker image](https://hub.docker.com/_/postgres/).
 
-
 ### Third-party services
-
 
 ## Contact
 
 Responsible Dmytro Hladkykh
-The primary contact for this project is  https://t.me/Dimo4kaaaaaa
+The primary contact for this project is https://t.me/Dimo4kaaaaaa

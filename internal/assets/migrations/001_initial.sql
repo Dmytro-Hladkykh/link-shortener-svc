@@ -7,7 +7,7 @@ CREATE TABLE links (
     clicks INTEGER DEFAULT 0
 );
 
-CREATE INDEX idx_short_code ON links (short_code);
+CREATE UNIQUE INDEX idx_short_code ON links (short_code);
 
 -- +migrate Down
 DROP TABLE links;

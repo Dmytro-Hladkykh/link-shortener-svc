@@ -29,12 +29,18 @@ services:
       - KV_VIPER_FILE=/config.yaml
     volumes:
       - ./config.yaml:/config.yaml
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "/usr/local/bin/link-shortener-svc migrate up && /usr/local/bin/link-shortener-svc run service",
+      ]
 
   nginx:
     image: nginx:latest
     restart: always
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - /var/www/html:/usr/share/nginx/html
     depends_on:
