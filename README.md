@@ -2,7 +2,7 @@
 
 ## Description
 
-This service provides URL shortening functionality. It allows users to create short links from long URLs, redirect users to original URLs when they use shortened links, and provides statistics for shortened links.
+This service provides URL shortening functionality. It allows users to create short links from long URLs, redirect users to original URLs when they use shortened links.
 
 ## Install
 
