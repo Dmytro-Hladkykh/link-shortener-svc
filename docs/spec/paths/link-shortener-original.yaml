@@ -1,0 +1,31 @@
+get:
+  summary: Get original URL
+  tags:
+    - ShortLinks
+  parameters:
+    - in: path
+      name: shortCode
+      required: true
+      schema:
+        type: string
+        example: "abc123"
+      description: Short code of the URL to retrieve the original URL.
+  responses:
+    "200":
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/GetOriginalURLResponse"
+    "404":
+      description: Short link not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error404"
+    "500":
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error500"

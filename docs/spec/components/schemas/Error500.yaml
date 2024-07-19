@@ -1,0 +1,11 @@
+type: object
+properties:
+  error:
+    type: object
+    properties:
+      code:
+        type: string
+        example: "500"
+      message:
+        type: string
+        example: "INTERNAL_SERVER_ERROR"

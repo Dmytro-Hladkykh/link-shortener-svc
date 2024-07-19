@@ -1,0 +1,11 @@
+type: object
+properties:
+  error:
+    type: object
+    properties:
+      code:
+        type: string
+        example: "404"
+      message:
+        type: string
+        example: "NOT_FOUND"

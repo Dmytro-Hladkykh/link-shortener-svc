@@ -1,0 +1,7 @@
+type: object
+required:
+  - original_url
+properties:
+  original_url:
+    type: string
+    example: "https://example.com/very/long/url"

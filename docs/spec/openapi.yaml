@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   version: 1.0.0
   title: link-shortener-svc
-  description: ''
+  description: "This service provides URL shortening functionality. It allows users to create short links from long URLs, redirect users to original URLs when they use shortened links."
 servers:
-  - url: 'https://api.demo.tokend.io'
+  - url: "https://api.demo.tokend.io"
     description: TokenD Developer Environment

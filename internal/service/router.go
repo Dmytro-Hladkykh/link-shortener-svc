@@ -7,7 +7,7 @@ import (
 	"gitlab.com/distributed_lab/ape"
 )
 
-func (s *service) router(cfg config.Config) chi.Router {
+func (s *service) router(cfg config.Config, createShortLinkHandler *handlers.CreateShortLinkHandler, getOriginalURLHandler *handlers.GetOriginalURLHandler) chi.Router {
 	r := chi.NewRouter()
 
 	r.Use(
@@ -20,8 +20,8 @@ func (s *service) router(cfg config.Config) chi.Router {
 	)
 
 	r.Route("/link-shortener", func(r chi.Router) {
-		r.Post("/", handlers.CreateShortLink)
-		r.Get("/{shortCode}", handlers.GetOriginalURL)
+		r.Post("/", createShortLinkHandler.CreateShortLink)
+		r.Get("/{shortCode}", getOriginalURLHandler.GetOriginalURL)
 	})
 
 	return r
