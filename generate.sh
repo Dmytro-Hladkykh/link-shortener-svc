@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo "Running generate script..."
+
 GENERATOR_IMAGE=tokend/openapi-generator:v0.1.0
 
 
