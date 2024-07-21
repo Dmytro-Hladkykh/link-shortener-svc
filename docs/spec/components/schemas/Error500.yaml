@@ -8,4 +8,4 @@ properties:
         example: "500"
       message:
         type: string
-        example: "INTERNAL_SERVER_ERROR"
+        example: "Internal Server Error"

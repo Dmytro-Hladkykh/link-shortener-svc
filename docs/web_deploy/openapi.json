@@ -150,7 +150,7 @@
               },
               "message": {
                 "type": "string",
-                "example": "NOT_FOUND"
+                "example": "Not Found"
               }
             }
           }
@@ -168,7 +168,7 @@
               },
               "message": {
                 "type": "string",
-                "example": "INTERNAL_SERVER_ERROR"
+                "example": "Internal Server Error"
               }
             }
           }

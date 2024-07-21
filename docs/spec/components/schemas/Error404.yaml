@@ -8,4 +8,4 @@ properties:
         example: "404"
       message:
         type: string
-        example: "NOT_FOUND"
+        example: "Not Found"

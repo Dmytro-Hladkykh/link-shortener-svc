@@ -1,28 +1,24 @@
+// internal/service/handlers/get_original_url.go
+
 package handlers
 
 import (
 	"net/http"
 
-	"github.com/Dmytro-Hladkykh/link-shortener-svc/internal/data"
 	"github.com/go-chi/chi"
 	"gitlab.com/distributed_lab/ape"
 	"gitlab.com/distributed_lab/ape/problems"
 )
 
-type GetOriginalURLHandler struct {
-	repo data.ShortLinkQ
-}
+func GetOriginalURL(w http.ResponseWriter, r *http.Request) {
+	log := Log(r)
+	db := DB(r)
 
-func NewGetOriginalURLHandler(repo data.ShortLinkQ) *GetOriginalURLHandler {
-	return &GetOriginalURLHandler{repo: repo}
-}
-
-func (h *GetOriginalURLHandler) GetOriginalURL(w http.ResponseWriter, r *http.Request) {
 	shortCode := chi.URLParam(r, "shortCode")
 
-	shortLink, err := h.repo.FilterByShortCode(shortCode).Get()
+	shortLink, err := db.ShortLink().FilterByShortCode(shortCode).Get()
 	if err != nil {
-		Log(r).WithError(err).Error("failed to get original URL")
+		log.WithError(err).Error("failed to get original URL")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}

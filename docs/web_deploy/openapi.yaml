@@ -96,7 +96,7 @@ components:
               example: '404'
             message:
               type: string
-              example: NOT_FOUND
+              example: Not Found
     Error500:
       type: object
       properties:
@@ -108,7 +108,7 @@ components:
               example: '500'
             message:
               type: string
-              example: INTERNAL_SERVER_ERROR
+              example: Internal Server Error
     GetOriginalURLResponse:
       type: object
       properties:

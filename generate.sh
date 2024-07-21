@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
 
-echo "Running generate script..."
-
 GENERATOR_IMAGE=tokend/openapi-generator:v0.1.0
 
-
-GENERATED="${GOPATH}/src/github.com/Dmytro-Hladkykh/link-shortener-svc/resources"
-OPENAPI_DIR="${GOPATH}/src/github.com/Dmytro-Hladkykh/link-shortener-svc/docs/web_deploy"
+GENERATED="$PWD/resources"
+OPENAPI_DIR="$PWD/docs/web_deploy"
 PACKAGE_NAME=resources
 
 function printHelp {
@@ -51,7 +48,9 @@ function parseArgs {
 }
 
 function generate {
+    (cd docs && npm run build)
     docker run -v "${OPENAPI_DIR}":/openapi -v "${GENERATED}":/generated "${GENERATOR_IMAGE}" generate -pkg "${PACKAGE_NAME}" --raw-formats-as-types
+    goimports -w ${GENERATED}
 }
 
 parseArgs "$@"

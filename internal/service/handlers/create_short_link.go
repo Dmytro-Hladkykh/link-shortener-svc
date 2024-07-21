@@ -1,3 +1,5 @@
+// internal/service/handlers/create_short_link.go
+
 package handlers
 
 import (
@@ -9,26 +11,21 @@ import (
 	"gitlab.com/distributed_lab/ape/problems"
 )
 
-type CreateShortLinkHandler struct {
-	repo data.ShortLinkQ
-}
+func CreateShortLink(w http.ResponseWriter, r *http.Request) {
+	log := Log(r)
+	db := DB(r)
 
-func NewCreateShortLinkHandler(repo data.ShortLinkQ) *CreateShortLinkHandler {
-	return &CreateShortLinkHandler{repo: repo}
-}
-
-func (h *CreateShortLinkHandler) CreateShortLink(w http.ResponseWriter, r *http.Request) {
 	request, err := requests.NewCreateShortLinkRequest(r)
 	if err != nil {
-		Log(r).WithError(err).Error("failed to create request")
+		log.WithError(err).Error("failed to create request")
 		ape.RenderErr(w, problems.BadRequest(err)...)
 		return
 	}
 
 	// check if link already exists
-	existingLink, err := h.repo.FilterByOriginalURL(request.OriginalURL).Get()
+	existingLink, err := db.ShortLink().FilterByOriginalURL(request.OriginalURL).Get()
 	if err != nil {
-		Log(r).WithError(err).Error("failed to check existing link")
+		log.WithError(err).Error("failed to check existing link")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
@@ -42,18 +39,18 @@ func (h *CreateShortLinkHandler) CreateShortLink(w http.ResponseWriter, r *http.
 	// if new link then generate short code
 	shortCode, err := data.GenerateShortCode()
 	if err != nil {
-		Log(r).WithError(err).Error("failed to generate short code")
+		log.WithError(err).Error("failed to generate short code")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
 
 	// create new link in db
-	newLink, err := h.repo.Insert(data.ShortLink{
+	newLink, err := db.ShortLink().Insert(data.ShortLink{
 		OriginalURL: request.OriginalURL,
 		ShortCode:   shortCode,
 	})
 	if err != nil {
-		Log(r).WithError(err).Error("failed to insert new short link")
+		log.WithError(err).Error("failed to insert new short link")
 		ape.RenderErr(w, problems.InternalError())
 		return
 	}
