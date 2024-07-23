@@ -1,5 +1,3 @@
-// internal/service/handlers/get_original_url.go
-
 package handlers
 
 import (
