@@ -1,5 +1,3 @@
-// internal/service/handlers/create_short_link.go
-
 package handlers
 
 import (
